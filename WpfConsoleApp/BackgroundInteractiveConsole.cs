@@ -110,56 +110,64 @@
                             Console.WriteLine("======================");
                             while ("q" != (input = Console.ReadLine()))
                             {
-                                if (string.Compare("cls", input, true) == 0)
+                                try
                                 {
-                                    Console.Clear();
-                                }
-                                else if (string.Compare("now", input, true) == 0)
-                                {
-                                    Console.WriteLine("{0}{1}{0}", "\t", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffff"));
-                                }
-                                else if (input.StartsWith(">>"))
-                                {
-                                    var path = input.TrimStart('>');
-                                    var directory = Path.GetDirectoryName(path);
-                                    if (Directory.Exists(directory))
+                                    if (string.Compare("cls", input, true) == 0)
                                     {
-                                        Directory.CreateDirectory(directory);
+                                        Console.Clear();
                                     }
-                                    consoleSetOut(path, true);
-                                }
-                                else if (string.Compare("flush", input, true) == 0)
-                                {
-                                    writer.Flush();
-                                }
-                                else if (input.StartsWith(">"))
-                                {
-                                    var path = input.TrimStart('>');
-                                    var directory = Path.GetDirectoryName(path);
-                                    if (Directory.Exists(directory))
+                                    else if (string.Compare("now", input, true) == 0)
                                     {
-                                        Directory.CreateDirectory(directory);
+                                        Console.WriteLine("{0}{1}{0}", "\t", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffff"));
                                     }
-                                    consoleSetOut(path, false);
-                                }
-                                else if (input.StartsWith("<"))
-                                {
-                                    if (writer != null)
+                                    else if (input.StartsWith(">>"))
+                                    {
+                                        var path = input.TrimStart('>');
+                                        var directory = Path.GetDirectoryName(path);
+                                        if (Directory.Exists(directory))
+                                        {
+                                            Directory.CreateDirectory(directory);
+                                        }
+                                        consoleSetOut(path, true);
+                                    }
+                                    else if (string.Compare("flush", input, true) == 0)
                                     {
                                         writer.Flush();
-                                        writer.Close();
-                                        writer.Dispose();
-                                        writer = null;
                                     }
-                                    Console.SetOut(consoleOut);
+                                    else if (input.StartsWith(">"))
+                                    {
+                                        var path = input.TrimStart('>');
+                                        var directory = Path.GetDirectoryName(path);
+                                        if (Directory.Exists(directory))
+                                        {
+                                            Directory.CreateDirectory(directory);
+                                        }
+                                        consoleSetOut(path, false);
+                                    }
+                                    else if (input.StartsWith("<"))
+                                    {
+                                        if (writer != null)
+                                        {
+                                            writer.Flush();
+                                            writer.Close();
+                                            writer.Dispose();
+                                            writer = null;
+                                        }
+                                        Console.SetOut(consoleOut);
+                                    }
+                                    else if (string.Compare("help", input, true) == 0)
+                                    {
+                                        help();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("echo : [{0}]", input);
+                                    }
                                 }
-                                else if (string.Compare("help", input, true) == 0)
+                                catch (Exception exception)
                                 {
-                                    help();
-                                }
-                                else
-                                {
-                                    Console.WriteLine("echo : [{0}]", input);
+                                    Console.WriteLine("BackgroundInteractiveConsole Caught Exception:{0}{1}", "\r\n", exception.ToString());
+                                    
                                 }
                             }
                             FreeConsole();
