@@ -1,16 +1,17 @@
 ﻿namespace Microshaoft.Win32
 {
-    using System.Runtime.InteropServices;
-    using System.Threading;
     using System;
     using System.IO;
+    using System.Runtime.InteropServices;
+    using System.Threading;
 
-    public static class BackgroundConsole
+    public static class BackgroundInteractiveConsole
     {
         /// <summary>
         /// 启动控制台
         /// </summary>
         /// <returns></returns>
+        /// 
         [DllImport("kernel32.dll")]
         private static extern bool AllocConsole();
         /// <summary>
