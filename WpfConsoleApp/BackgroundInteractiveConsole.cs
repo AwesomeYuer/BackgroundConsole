@@ -28,7 +28,7 @@
                     (
                         () =>
                         {
-                            Console.Title = string.Format("Backgroud Debug Console For : [{0}]", Console.Title);
+                            Console.Title = string.Format("Background Debug Console For : [{0}]", Console.Title);
                             var input = string.Empty;
                             TextWriter consoleOut = Console.Out;
                             StreamWriter writer = null;
